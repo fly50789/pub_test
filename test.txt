@@ -1,0 +1,61 @@
+
+import time
+import threading
+import traceback
+import sys
+import inspect
+import os
+from tkinter import messagebox
+import re
+
+
+from bs4 import BeautifulSoup
+
+
+
+
+class Error_Tools:
+
+      @staticmethod
+      def error_type(e):
+
+         #curframe = inspect.currentframe()
+         #calframe = inspect.getouterframes(curframe, 2)
+         template = 'An exception of type "{0}" occurred in function "{1}". Arguments:\n{2!r}'
+         message = template.format(type(e).__name__, sys._getframe().f_back.f_code.co_name,e.args)
+         return message
+
+      @staticmethod
+      def trace_msg():
+         return traceback.format_exc()
+
+      @staticmethod
+      def all_msg(e):
+          if e:
+              return Error_Tools.error_type(e)+traceback.format_exc()
+          else:
+              return ''
+
+      @staticmethod
+      def error_exit(title,e=None,msg='',parent=None):
+          messagebox.showerror(title, msg+Error_Tools.all_msg(e),parent=parent)
+          os._exit(0)
+
+      @staticmethod
+      def warning_box(title,e=None,msg='',parent=None):
+          messagebox.showwarning(title, msg+Error_Tools.all_msg(e),parent=parent)
+
+      @staticmethod
+      def ask_box(title, msg='',parent=None):
+          return messagebox.askokcancel(title,msg,parent=parent)
+
+      @staticmethod
+      def show_box(title, msg='',parent=None):
+           messagebox.showinfo(title, msg,parent=parent)
+
+
+
+if __name__ =='__main__':
+    print(123)
+
+
